@@ -1,12 +1,11 @@
-## 學習筆記
+## 個人學習筆記 
 
-[Getting Started with the BLoC Pattern](https://www.raywenderlich.com/31973428-getting-started-with-the-bloc-pattern)
+[資料來源](https://www.raywenderlich.com/31973428-getting-started-with-the-bloc-pattern)
 
-資料來源
 
-![Untitled](https://koenig-media.raywenderlich.com/uploads/2020/08/03-BLoC-layers-1.png)
+<p><img alt="gif" src="https://github.com/nyto9999-flutter/tutorial_block_pattern/blob/master/bloc.gif" width="255" height="500" /></p>
+<p><img src="https://koenig-media.raywenderlich.com/uploads/2020/08/04-BLoC-diagram-1.png" width="255" height="200" /></p>
 
-![Untitled](https://koenig-media.raywenderlich.com/uploads/2020/08/04-BLoC-diagram-1.png)
 
 ### StreamController:
 
@@ -185,7 +184,6 @@ Widget build(BuildContext context) {
     1. 每當Textfield onchanged 就會發送網路請求，解決方法: (Debouncing)略過短時間的按鍵輸入。
     2. 當 bloc.qeury.add 時 沒有loading 畫面
     3. asyncMap 等待請求完成，因此用戶會一一看到所有輸入的查詢響應。通常，您必須忽略先前的請求結果來處理新的查詢。
-    4. 以上問題可以透過 business login layer 解決
 
 ```dart
 
