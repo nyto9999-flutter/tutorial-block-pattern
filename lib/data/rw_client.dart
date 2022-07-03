@@ -43,6 +43,7 @@ import 'dart:convert' show json;
 import 'package:article_finder/data/article.dart';
 import 'package:http/http.dart' as http;
 
+// https://api.raywenderlich.com/api/contents
 class RWClient {
   final _host = 'api.raywenderlich.com';
   final _contextRoot = 'api';
@@ -58,7 +59,9 @@ class RWClient {
     }
 
     final results = await request(path: 'contents', parameters: params);
-    return results['data'].map<Article>(Article.fromJson).toList(growable: false);
+    return results['data']
+        .map<Article>(Article.fromJson)
+        .toList(growable: false);
   }
 
   Future<Article?> getDetailArticle(String id) async {
