@@ -1,3 +1,5 @@
+## 學習筆記
+
 [Getting Started with the BLoC Pattern](https://www.raywenderlich.com/31973428-getting-started-with-the-bloc-pattern)
 
 資料來源
@@ -6,21 +8,21 @@
 
 ![Untitled](https://koenig-media.raywenderlich.com/uploads/2020/08/04-BLoC-diagram-1.png)
 
-StreamController:
+### StreamController:
 
 `StreamController` 是 `dart:async` 的method， 用來管理已實例化的 `stream`
 
 和 `sink` 。 `sink`和 `stream`是相反的，`sink`  的用途是將 API data 送到 `StreamController`， 而 `stream` 監聽。
 
-Stream: 
+### Stream: 
 
 `Stream` 是 sequence of async events， 所以通常是和 `Future`一起使用。
 
-summary
+### Summary
 
 `BLoCs` 是 處理和儲存 business logic 的 `objects` `sinks`接收來自API 的 input， 透過 `streams`提供 output
 
-Instruction
+## Instruction
 
 1. 在創建 BLoCs 之前， 每個BLoC都會 implements 這個接口。  
 
@@ -30,13 +32,13 @@ abstract class Bloc {
 }
 ```
 
-1. 創建BLoC
+2. 創建BLoC
 
 ```dart
 class ArticleListBloc implements Bloc {
   // 1 RWClient 與 API 溝通
   final _client = RWClient();
-  // 2 實例化 StreamController， 它會管理 input sink， 且可以告訴它傳回來的 stream 會是什麼型別
+  // 2 <String?> Sink會接收Textfield的字串
   final _searchQueryController = StreamController<String?>();
   // 3 Sink<String?> 是 public sink interface， 它會傳送事件到這個Bloc
   Sink<String?> get searchQuery => _searchQueryController.sink;
@@ -59,7 +61,7 @@ class ArticleListBloc implements Bloc {
 }
 ```
 
-1. BLoC 注入 widget tree 
+3. BLoC 注入 widget tree 
     1. 命名為Provider 是 Flutter convention
     2. Provider 用來 保存 data 並且 'well provides’ 給它的children
     3. InheritedWidget 和 StatefulWidget 都能實現關閉所有BLoCs的功能，選擇StatefulWidget 的原因是，代碼比較簡單。
@@ -93,7 +95,7 @@ class _BlocProviderState extends State<BlocProvider> {
   Widget build(BuildContext context) => widget.child;
 
   // 4 繼承StatefulWidget 為一個原因是，可以使用 dispose()。 當事件結束， 這個widget從 widget tree 移除
-	// Flutter 會呼叫 dispose()， 換言之 stream 自動地被關掉。 
+	// Flutter 會呼叫 dispose()。 
   @override
   void dispose() {
     widget.bloc.dispose();
@@ -102,8 +104,8 @@ class _BlocProviderState extends State<BlocProvider> {
 }
 ```
 
-1.  BLoC 和 UI 連接
-    1. 
+4.  BLoC 和 UI 連接
+    
 
 ```dart
 //class article_list_screen.dart....
@@ -179,7 +181,7 @@ Widget build(BuildContext context) {
 > ***[Debouncing](https://reactivex.io/documentation/operators/debounce.html) ←連結***
  means the app skips input events that come in short intervals.
 > 
-1. 改善UX and performance issues
+5. 改善UX and performance issues
     1. 每當Textfield onchanged 就會發送網路請求，解決方法: (Debouncing)略過短時間的按鍵輸入。
     2. 當 bloc.qeury.add 時 沒有loading 畫面
     3. asyncMap 等待請求完成，因此用戶會一一看到所有輸入的查詢響應。通常，您必須忽略先前的請求結果來處理新的查詢。
@@ -209,7 +211,7 @@ ArticleListBloc() {
 }
 ```
 
-1. Article Detail and its BLoC
+6. Article Detail and its BLoC
     
     
 
@@ -298,7 +300,7 @@ class ArticleDetailScreen extends StatelessWidget {
 
 ```
 
-1. Refresh 功能
+7. Refresh 功能
     1. articleStream.first is async and wait for sink.add then, render UI
     2. • Do you remember the `asBroadcastStream()` call before? It’s required because of this line. `first` creates another subscription to `articleStream`.
 
